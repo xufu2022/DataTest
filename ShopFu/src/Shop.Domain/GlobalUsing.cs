@@ -1,0 +1,10 @@
+﻿global using Shop.ApplicationCore;
+global using Shop.ApplicationCore.Entities;
+global using Shop.ApplicationCore.Interfaces;
+global using Shop.Domain;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Reflection;
+global using System.Threading.Tasks;
+global using System.Threading;
+global using System;
