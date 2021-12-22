@@ -11,4 +11,8 @@
     <Folder Include="Interfaces\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fu.Common.Data\Fu.Common.Data.csproj" />
+  </ItemGroup>
+
 </Project>
