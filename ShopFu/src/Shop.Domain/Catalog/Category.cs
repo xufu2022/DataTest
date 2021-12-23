@@ -1,12 +1,14 @@
-﻿
+﻿using Shop.Domain.Product;
+
 namespace Shop.Domain.Catalog;
 
-public class Catagory:BaseEntity, ILocalizedEntity
+public class Category : BaseEntity, ILocalizedEntity
 {
     public string Name { get; set; } = null!;
-    public string Description { get; set; }=null!;
+    public string Description { get; set; } = null!;
 
-    public int ParentCategoryId { get; set; }
+    public Category? Parent { get; set; }
+    public int? ParentCategoryId { get; set; }
 
     public int PictureId { get; set; }
 
@@ -32,7 +34,7 @@ public class Catagory:BaseEntity, ILocalizedEntity
 
     public string? MetaTitle { get; set; }
 
-
-
-
+    // experiment with many to many 
+    public ICollection<Product.Product> Products { get; set; }
+    public List<ProductCategory> ProductCategories { get; set; }
 }

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Catalog\" />
     <Folder Include="FeedBack\" />
     <Folder Include="Customer\" />
     <Folder Include="Localization\" />

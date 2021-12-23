@@ -1,6 +1,10 @@
-﻿namespace Shop.ApplicationCore.Entities;
+﻿using Fu.Common.Data;
 
-public abstract class BaseEntity:
+namespace Shop.ApplicationCore.Entities;
+
+public abstract class BaseEntity:IEntity<int>
 {
     public virtual int Id { get; protected set; }
+
+    public object[] GetKeys() => new object[] {Id!};
 }
