@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Catalog;
+using Shop.Domain.Experiment;
 using Shop.Domain.Product;
 
 namespace Shop.Data
@@ -32,6 +33,18 @@ namespace Shop.Data
 
         public DbSet<ProductCategory> ProductCategories { get; set; } = null!;
 
+        //many to many test 1
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        //end many to many test 1
+
+        //one to one
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogImage> BlogImages { get; set; }
+        //end one to one
+
+
+        //https://docs.microsoft.com/en-us/ef/core/modeling/relationships?tabs=fluent-api%2Cfluent-api-simple-key%2Csimple-key
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -55,23 +68,38 @@ namespace Shop.Data
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // many to many 1
-            //modelBuilder.Entity<Category>()
-            //    .HasMany(p => p.Products)
-            //    .WithMany(p => p.Categories)
-            //    .UsingEntity<ProductCategory>(
-            //        j => j.HasOne(pt => pt.Category)
-            //            .WithMany(t => t.ProductCategories)
-            //            .HasForeignKey(pt => pt.CategoryId),
-            //        k => k.HasOne(x => x.Product)
-            //            .WithMany(x => x.ProductCategories)
-            //            .HasForeignKey(x => x.ProductId),
-            //        j =>
-            //        {
-            //            j.Property(x => x.IsFeaturedProduct).HasDefaultValue(false);
-            //        }
-            //    );
+            //experiment many to many 1
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Tags)
+                .WithMany(p => p.Posts)
+                .UsingEntity<PostTag>(
+                    j => j
+                        .HasOne(pt => pt.Tag)
+                        .WithMany(t => t.PostTags)
+                        .HasForeignKey(pt => pt.TagId),
+                    j => j
+                        .HasOne(pt => pt.Post)
+                        .WithMany(p => p.PostTags)
+                        .HasForeignKey(pt => pt.PostId),
+                    j =>
+                    {
+                        j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        j.HasKey(t => new { t.PostId, t.TagId });
+                    });
 
+            //experiment many2many 2 without linktable
+            //modelBuilder
+            //    .Entity<Post>()
+            //    .HasMany(p => p.Tags)
+            //    .WithMany(p => p.Posts)
+            //    .UsingEntity(j => j.ToTable("PostTags"));
+
+            //experiment one 2 one
+            modelBuilder.Entity<Blog>()
+                .HasOne(b => b.BlogImage)
+                .WithOne(i => i.Blog)
+                .HasForeignKey<BlogImage>(b => b.BlogForeignKey);
+            //
         }
     }
 }

@@ -54,7 +54,4 @@ public class Product : BaseEntity, ILocalizedEntity
     public DateTime UpdatedOnUtc { get; set; }
 
 
-    // experiment with many to many 
-    public ICollection<Category> Categories { get; set; }
-    public List<ProductCategory> ProductCategories { get; set; }
 }

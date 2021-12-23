@@ -34,7 +34,5 @@ public class Category : BaseEntity, ILocalizedEntity
 
     public string? MetaTitle { get; set; }
 
-    // experiment with many to many 
-    public ICollection<Product.Product> Products { get; set; }
-    public List<ProductCategory> ProductCategories { get; set; }
+
 }

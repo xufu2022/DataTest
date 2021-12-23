@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop.Data;
 
@@ -11,9 +12,10 @@ using Shop.Data;
 namespace Shop.Data.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    partial class ShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211223045500_many2many1")]
+    partial class many2many1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,50 +84,6 @@ namespace Shop.Data.Migrations
                     b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Shop.Domain.Experiment.Blog", b =>
-                {
-                    b.Property<int>("BlogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BlogId"), 1L, 1);
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BlogId");
-
-                    b.ToTable("Blogs");
-                });
-
-            modelBuilder.Entity("Shop.Domain.Experiment.BlogImage", b =>
-                {
-                    b.Property<int>("BlogImageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BlogImageId"), 1L, 1);
-
-                    b.Property<int>("BlogForeignKey")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Caption")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Image")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("BlogImageId");
-
-                    b.HasIndex("BlogForeignKey")
-                        .IsUnique();
-
-                    b.ToTable("BlogImages");
                 });
 
             modelBuilder.Entity("Shop.Domain.Experiment.Post", b =>
@@ -303,17 +261,6 @@ namespace Shop.Data.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Shop.Domain.Experiment.BlogImage", b =>
-                {
-                    b.HasOne("Shop.Domain.Experiment.Blog", "Blog")
-                        .WithOne("BlogImage")
-                        .HasForeignKey("Shop.Domain.Experiment.BlogImage", "BlogForeignKey")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Blog");
-                });
-
             modelBuilder.Entity("Shop.Domain.Experiment.PostTag", b =>
                 {
                     b.HasOne("Shop.Domain.Experiment.Post", "Post")
@@ -350,12 +297,6 @@ namespace Shop.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Shop.Domain.Experiment.Blog", b =>
-                {
-                    b.Navigation("BlogImage")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Shop.Domain.Experiment.Post", b =>
