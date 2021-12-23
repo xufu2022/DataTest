@@ -23,10 +23,10 @@ namespace Shop.Data
                     .UseSqlServer("server=.;database=ShopFu;Integrated Security=true;");
             }
         }
-        //public ShopDbContext(DbContextOptions<ShopDbContext> options): base(options)
-        //{
-        //    if (options == null) throw new ArgumentNullException(nameof(options));
-        //}
+        public ShopDbContext(DbContextOptions options) : base(options)
+        {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+        }
 
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;

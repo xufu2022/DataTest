@@ -12,8 +12,8 @@ using Shop.Data;
 namespace Shop.Data.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20211223050220_one2one1")]
-    partial class one2one1
+    [Migration("20211223102200_InitDb")]
+    partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
