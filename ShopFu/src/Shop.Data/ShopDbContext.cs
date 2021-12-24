@@ -13,19 +13,9 @@ namespace Shop.Data
 {
     public class ShopDbContext:DbContext
     {
-        public ShopDbContext()
-        { }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        public ShopDbContext(DbContextOptions<ShopDbContext> options) : base(options)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder
-                    .UseSqlServer("server=.;database=ShopFu;Integrated Security=true;");
-            }
-        }
-        public ShopDbContext(DbContextOptions options) : base(options)
-        {
-            if (options == null) throw new ArgumentNullException(nameof(options));
         }
 
         public DbSet<Category> Categories { get; set; } = null!;
